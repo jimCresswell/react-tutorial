@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {getPlayer, calculateWinner} from './pure-functions.js'
+import {getPlayer, calculateWinner, indexToCoords} from './pure-functions.js'
 
 import './index.css';
 
@@ -52,6 +52,7 @@ class Game extends React.Component {
       this.state = {
         history: [{
           squares: Array(9).fill(null),
+          move: 'No moves'
         }],
         stepNumber: 0,
         xIsNext: true,
@@ -66,12 +67,16 @@ class Game extends React.Component {
 
     if (this.state.winner || squares[i]) return;
 
-    squares[i] = getPlayer(this.state.xIsNext);
+    const currentPlayer = getPlayer(this.state.xIsNext);
+    squares[i] = currentPlayer;
+
+    const [xCoord, yCoord] = indexToCoords(i);
 
     const winner = calculateWinner(squares);
     this.setState({
       history: history.concat([{
         squares: squares,
+        move: currentPlayer + ' at (x:' + xCoord + ', y:' + yCoord + ')',
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
@@ -96,9 +101,9 @@ class Game extends React.Component {
 
     const moves = history.map((step, moveNumber) => {
 
-      const desc = moveNumber > 0 ? 'Go to move #' + moveNumber : 'Go to game start';
+      const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : 'Go to game start';
       return (
-        <li key={moveNumber}>
+        <li key={moveNumber} className={moveNumber===this.state.stepNumber?'highlight':''}>
           <button onClick={() => this.jumpTo(moveNumber)}>{desc}</button>
         </li>
       );

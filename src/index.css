@@ -48,3 +48,8 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+.game-info .highlight,
+ .game-info .highlight button {
+  font-weight: bolder;
+}
