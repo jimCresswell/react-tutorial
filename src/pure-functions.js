@@ -40,4 +40,15 @@ function indexToCoords(index) {
   return [x,y];
 }
 
-export {getPlayer, calculateWinner, indexToCoords};
+/**
+ * Create an array n items long and fill it with the result of invoking function f.
+ * For use with jsx markup descriptions.
+ * @param  {Number} n length of array
+ * @param  {Function} f function to generate array content.
+ * @return {Array}   array of length n filled with results of calling f.
+ */
+function repeat(n, f) {
+ return Array(n).fill(true).map(() => f());
+}
+
+export {getPlayer, calculateWinner, indexToCoords, repeat};
