@@ -55,7 +55,7 @@ class Game extends React.Component {
           move: 'No moves'
         }],
         stepNumber: 0,
-        xIsNext: true,
+        playerOneNext: true,
         winner: null,
       }
   }
@@ -67,7 +67,7 @@ class Game extends React.Component {
 
     if (this.state.winner || squares[i]) return;
 
-    const currentPlayer = getPlayer(this.state.xIsNext);
+    const currentPlayer = getPlayer(this.state.playerOneNext);
     squares[i] = currentPlayer;
 
     const [xCoord, yCoord] = indexToCoords(i);
@@ -79,17 +79,17 @@ class Game extends React.Component {
         move: currentPlayer + ' at (x:' + xCoord + ', y:' + yCoord + ')',
       }]),
       stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
+      playerOneNext: !this.state.playerOneNext,
       winner: winner,
     });
   }
 
   jumpTo(step) {
-    /* TODO: Move xIsNext and winner into the history array,
+    /* TODO: Move playerOneNext and winner into the history array,
     then we only need to set `stepNumber` here */
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0,
+      playerOneNext: (step % 2) === 0,
       winner: null
     });
   }
@@ -113,7 +113,7 @@ class Game extends React.Component {
     if (winner) {
       status = 'Winner: ' + this.state.winner;
     } else {
-      status = 'Next player: ' + getPlayer(this.state.xIsNext);
+      status = 'Next player: ' + getPlayer(this.state.playerOneNext);
     }
 
     return (

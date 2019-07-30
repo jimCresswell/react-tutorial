@@ -1,23 +1,24 @@
 import {getPlayer, calculateWinner, indexToCoords} from './pure-functions.js';
+import {boardWidth, boardHeight, playerOneChar, playerTwoChar} from './game-config.js';
 
 // getPlayer
 test('Gets next player symbol', () => {
-  let xIsNext = true;
-  expect(getPlayer(xIsNext)).toBe('X');
+  let playerOneNext = true;
+  expect(getPlayer(playerOneNext)).toBe(playerOneChar);
 
-  xIsNext = false;
-  expect(getPlayer(xIsNext)).toBe('O');
+  playerOneNext = false;
+  expect(getPlayer(playerOneNext)).toBe(playerTwoChar);
 });
 
-// calculateWinner
+// calculateWinner.
 test('Identifies winning moves', () => {
   // No moves
-  let squares = Array(9).fill(null);
+  let squares = Array(boardWidth*boardHeight).fill(null);
   expect(calculateWinner(squares)).toBe(null);
 
-  // X wins
-  squares = [null, 'O', 'X', null, 'X', 'O', 'X', '0', null];
-  expect(calculateWinner(squares)).toBe('X');
+  // Player One wins with a straight accross the top.
+  squares.fill(playerOneChar, 0, boardWidth);
+  expect(calculateWinner(squares)).toBe(playerOneChar);
 });
 
 // indexToCoords
