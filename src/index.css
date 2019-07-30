@@ -1,6 +1,24 @@
+
+@keyframes blinking {
+  0%{
+    background-color: #ff3d50;
+    border: 5px solid #6565f2;
+  }
+  50%{
+    background-color: #55d66b;
+    border: 5px solid #126620;
+  }
+  100%{
+    background-color: #222291;
+    border: 5px solid #871924;
+  }
+}
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  background-color: black;
+  color: white;
 }
 
 ol, ul {
@@ -21,15 +39,16 @@ ol, ul {
   background: #fff;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
+  font-size: 2.6em;
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
+  line-height: 1.2em;
+  height: 1.2em;
+  width: 1.2em;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+
 }
 
 .square:focus {
@@ -41,12 +60,28 @@ ol, ul {
 }
 
 .game {
+  width: 30em;
   display: flex;
   flex-direction: row;
+  margin: 4em auto;
+}
+
+.game-board {
+  margin-top: 2.4em;
 }
 
 .game-info {
   margin-left: 20px;
+}
+
+.game-info > div {
+  text-align: center;
+  padding: 0.1em;
+  margin-left: 1em;
+}
+.game-info > div.winner {
+  font-weight: bolder;
+  animation: blinking 1s infinite;
 }
 
 .game-info .highlight,
