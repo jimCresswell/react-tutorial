@@ -36,7 +36,7 @@ ol, ul {
 }
 
 .square {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid #999;
   float: left;
   font-size: 2.6em;
@@ -59,33 +59,47 @@ ol, ul {
   background: #ddd;
 }
 
+.background {
+  background: center / contain no-repeat url('./images/wopr_super.jpg');
+  width: 100%;
+  min-height: 80vh;
+  padding: 1em;
+}
+
 .game {
-  width: 30em;
   display: flex;
   flex-direction: row;
-  margin: 4em auto;
+  width: 30em;
+  margin: 0 auto;
 }
 
 .game-board {
-  margin-top: 3.2em;
+  margin-top: 3.6em;
 }
 
 .game-info {
   margin-left: 20px;
 }
 
-.game-info > div {
-  text-align: center;
+.game-info .status {
+  font-family: monospace;
+  max-width: 16em;
   padding: 0.1em;
   margin-left: 1em;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
   border: 5px solid black;
 }
-.game-info > div.winner {
+.game-info .winner {
   font-weight: bolder;
   animation: blinking 1s infinite;
 }
 
+.game-info button {
+  opacity: 0.8;
+}
+
 .game-info .highlight,
- .game-info .highlight button {
+.game-info .highlight button {
   font-weight: bolder;
 }

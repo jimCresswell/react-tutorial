@@ -107,23 +107,27 @@ class Game extends React.Component {
     });
 
     let status;
-    if (winner) {
+    if (this.state.stepNumber===0) {
+      status = 'SHALL WE PLAY A GAME?';
+    } else if (winner) {
       status = 'Winner: ' + this.state.winner;
     } else {
       status = 'Next player: ' + getPlayer(this.state.playerOneNext);
     }
 
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-          />
-        </div>
-        <div className="game-info">
-          <div className={winner?'winner':''}>{status}</div>
-          <ol>{moves}</ol>
+      <div className="background">
+        <div className="game">
+          <div className="game-board">
+            <Board
+              squares={current.squares}
+              onClick={(i) => this.handleClick(i)}
+            />
+          </div>
+          <div className="game-info">
+            <div className={`status ${winner?'winner':''}`}>{status}</div>
+            <ol>{moves}</ol>
+          </div>
         </div>
       </div>
     );
