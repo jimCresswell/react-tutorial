@@ -6,6 +6,10 @@ import {characteristicLength as length} from './game-config.js';
 
 import './index.css';
 
+import anworldAudio from './audio/another-world-intro.mp3';
+import rtypeAudio from './audio/r-type-title.mp3';
+import shadowAudio from './audio/shadow-of-the-beast-intro.mp3';
+
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -18,6 +22,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
+        key={'square'+i}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
@@ -26,11 +31,12 @@ class Board extends React.Component {
 
   render() {
     let i = 0;
+    let rowCounter = 0;
 
     // Within each row for each column render a square.
     const renderRow = () => {
       return (
-        <div className="board-row">
+        <div className="board-row" key={'row'+(rowCounter++)}>
           {repeat(length, () => this.renderSquare(i++))}
         </div>
       );
@@ -48,6 +54,11 @@ class Board extends React.Component {
 class Game extends React.Component {
   constructor(props) {
       super(props);
+
+      const music = [anworldAudio, rtypeAudio, shadowAudio];
+      const currentMusicIndex = Math.floor(Math.random()*Math.floor(music.length));
+      const currentMusic = music[currentMusicIndex];
+
       this.state = {
         history: [{
           squares: Array(length * length).fill(null),
@@ -56,6 +67,9 @@ class Game extends React.Component {
         stepNumber: 0,
         playerOneNext: true,
         winner: null,
+        music: music,
+        currentMusicIndex: currentMusicIndex,
+        currentMusic: currentMusic,
       }
   }
 
@@ -90,6 +104,21 @@ class Game extends React.Component {
       stepNumber: step,
       playerOneNext: (step % 2) === 0,
       winner: null
+    });
+  }
+
+  handleEnded() {
+    const music = this.state.music;
+    let currentMusicIndex = this.state.currentMusicIndex;
+    currentMusicIndex = (currentMusicIndex + 1) % music.length;
+
+    let currentMusic = music[currentMusicIndex];
+
+
+    console.log("changing music");
+    this.setState({
+      currentMusicIndex: currentMusicIndex,
+      currentMusic: currentMusic
     });
   }
 
@@ -130,6 +159,12 @@ class Game extends React.Component {
             <div className={`status ${winner?'winner':''}`}>{status}</div>
             <ol>{moves}</ol>
           </div>
+          <figure className="music">
+            <figcaption>Music from <a href="https://retro.sx">retro.sx</a></figcaption>
+            <audio controls src={this.state.currentMusic} preload="none" autoPlay={true} onEnded={() => this.handleEnded()}>
+              <p>Your browser does not support the <code>audio</code> element.</p>
+            </audio>
+          </figure>
         </div>
       </div>
     );
