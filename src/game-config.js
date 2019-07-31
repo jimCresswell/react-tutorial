@@ -1,6 +1,7 @@
-const boardWidth = 3;
-const boardHeight = 3;
+// Board width, height, winning length.
+const characteristicLength = 3;
+
 const playerOneChar = 'X';
 const playerTwoChar = 'O';
 
-export {boardWidth, boardHeight, playerOneChar, playerTwoChar};
+export {characteristicLength, playerOneChar, playerTwoChar};

@@ -1,5 +1,5 @@
 import {getPlayer, calculateWinner, indexToCoords} from './pure-functions.js';
-import {boardWidth, boardHeight, playerOneChar, playerTwoChar} from './game-config.js';
+import {characteristicLength, playerOneChar, playerTwoChar} from './game-config.js';
 
 // getPlayer
 test('Gets next player symbol', () => {
@@ -13,11 +13,11 @@ test('Gets next player symbol', () => {
 // calculateWinner.
 test('Identifies winning moves', () => {
   // No moves
-  let squares = Array(boardWidth*boardHeight).fill(null);
+  let squares = Array(characteristicLength * characteristicLength).fill(null);
   expect(calculateWinner(squares)).toBe(null);
 
   // Player One wins with a straight accross the top.
-  squares.fill(playerOneChar, 0, boardWidth);
+  squares.fill(playerOneChar, 0, characteristicLength);
   expect(calculateWinner(squares)).toBe(playerOneChar);
 });
 

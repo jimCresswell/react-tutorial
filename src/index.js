@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {getPlayer, calculateWinner, indexToCoords, repeat} from './pure-functions.js'
-import {boardWidth, boardHeight} from './game-config.js';
+import {characteristicLength as length} from './game-config.js';
 
 import './index.css';
 
@@ -27,17 +27,19 @@ class Board extends React.Component {
   render() {
     let i = 0;
 
+    // Within each row for each column render a square.
     const renderRow = () => {
       return (
         <div className="board-row">
-          {repeat(boardWidth, () => this.renderSquare(i++))}
+          {repeat(length, () => this.renderSquare(i++))}
         </div>
       );
     }
 
+    // For each row render a row
     return (
       <div>
-        {repeat(boardHeight, renderRow)}
+        {repeat(length, renderRow)}
       </div>
     );
   }
@@ -48,7 +50,7 @@ class Game extends React.Component {
       super(props);
       this.state = {
         history: [{
-          squares: Array(boardWidth * boardHeight).fill(null),
+          squares: Array(length * length).fill(null),
           move: 'No moves'
         }],
         stepNumber: 0,
