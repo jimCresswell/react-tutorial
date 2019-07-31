@@ -68,6 +68,7 @@ class Game extends React.Component {
         }],
         stepNumber: 0,
         playerOneNext: true,
+        isDraw: false,
         winner: null,
         music: music,
         currentMusicIndex: currentMusicIndex,
@@ -75,6 +76,7 @@ class Game extends React.Component {
       }
   }
 
+  // This function advances the game logic.
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber+1);
     const current  = history[history.length - 1];
@@ -88,6 +90,10 @@ class Game extends React.Component {
     const [xCoord, yCoord] = indexToCoords(i, characteristicLength);
 
     const winner = calculateWinner(squares, characteristicLength);
+
+    // If there is no winner and there are no empty squares it is a draw.
+    const isDraw = (winner===null) && !squares.includes(null);
+
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -95,6 +101,7 @@ class Game extends React.Component {
       }]),
       stepNumber: history.length,
       playerOneNext: !this.state.playerOneNext,
+      isDraw: isDraw,
       winner: winner,
     });
   }
@@ -128,6 +135,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = this.state.winner;
+    const isDraw = this.state.isDraw;
 
     const moves = history.map((step, moveNumber) => {
 
@@ -142,6 +150,8 @@ class Game extends React.Component {
     let status;
     if (this.state.stepNumber===0) {
       status = 'SHALL WE PLAY A GAME?';
+    } else if (isDraw) {
+      status = 'It\'s a tie. How about a nice game of chess?'
     } else if (winner) {
       status = 'Winner: ' + this.state.winner;
     } else {
