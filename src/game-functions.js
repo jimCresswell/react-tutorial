@@ -31,23 +31,38 @@ const diagonals = Array(2)
 }
 
 function calculateWinner(squares, length) {
+
+  let result = {
+    winner: null,
+    winningLine: null
+  };
+
   // Get all the potential winning lines.
   const lines = generateWinningLines(length);
 
-  const winner = lines
+  const winningLines = lines
     // For each potential winning line get the current played characters from the game.
-    .map(indices => indices.map(index => squares[index]))
+    .map(indices => indices.map(index => ({index:index, value:squares[index]})))
     // Remove lines which are not full.
-    .filter((line) => line.every((v) => v!==null))
+    .filter((line) => line.every((v) => v.value!==null))
     // Remove lines where not all the characters are the same.
-    .filter((line) => line.every((v,i,a) => a[0]===v))
     // Any lines remaining are winning lines.
-    // Map to first instance of winning character and extract.
-    // Reduce to single character or null.
-    .map((lines) => lines[0])[0] || null;
+    .filter((line) => line.every((v,i,a) => a[0].value===v.value));
 
-  // Will be a player character or null.
-  return winner;
+  // If there are no winning lines return null.
+  if (winningLines.length < 1) return result;
+
+  // If there is at least one winning line then there should only be one.
+  const winningLine = winningLines[0];
+  // The winning character is the same across the line.
+  const winner = winningLine[0].value;
+  // Grab the winning squares index values
+  const winningLineIndices = winningLines[0].map((lines) => lines.index);
+
+  result.winner = winner;
+  result.winningLine = winningLineIndices;
+
+  return result;
 }
 
 /**

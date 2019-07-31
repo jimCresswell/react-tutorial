@@ -14,11 +14,18 @@ test('Gets next player symbol', () => {
 test('Identifies winning moves', () => {
   // No moves
   let squares = Array(characteristicLength * characteristicLength).fill(null);
-  expect(calculateWinner(squares, characteristicLength)).toBe(null);
+  let result = calculateWinner(squares, characteristicLength);
+  expect(result.winner).toBe(null);
+  expect(result.winningLine).toBe(null);
 
   // Player One wins with a straight accross the top.
   squares.fill(playerOneChar, 0, characteristicLength);
-  expect(calculateWinner(squares, characteristicLength)).toBe(playerOneChar);
+  result = calculateWinner(squares, characteristicLength);
+  // The expected winning line is the top row [1,2,3,4...]
+  let expectedWinningLine = Array(characteristicLength).fill(true).map((v,i) => i);
+
+  expect(result.winner).toBe(playerOneChar);
+  expect(result.winningLine).toStrictEqual(expectedWinningLine);
 });
 
 // indexToCoords

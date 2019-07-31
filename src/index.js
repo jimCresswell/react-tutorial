@@ -70,6 +70,7 @@ class Game extends React.Component {
         playerOneNext: true,
         isDraw: false,
         winner: null,
+        winningLine: null,
         music: music,
         currentMusicIndex: currentMusicIndex,
         currentMusic: currentMusic,
@@ -89,7 +90,9 @@ class Game extends React.Component {
 
     const [xCoord, yCoord] = indexToCoords(i, characteristicLength);
 
-    const winner = calculateWinner(squares, characteristicLength);
+    const winningState = calculateWinner(squares, characteristicLength);
+    const winner = winningState.winner;
+    const winningLine = winningState.winningLine;
 
     // If there is no winner and there are no empty squares it is a draw.
     const isDraw = (winner===null) && !squares.includes(null);
@@ -103,6 +106,7 @@ class Game extends React.Component {
       playerOneNext: !this.state.playerOneNext,
       isDraw: isDraw,
       winner: winner,
+      winningLine: winningLine,
     });
   }
 
