@@ -1,4 +1,4 @@
-import {characteristicLength, playerOneChar, playerTwoChar} from './game-config.js';
+import {playerOneChar, playerTwoChar} from './game-config.js';
 
 function getPlayer(playerOneNext) {
   return playerOneNext ? playerOneChar : playerTwoChar;
@@ -6,7 +6,7 @@ function getPlayer(playerOneNext) {
 
 // Assumes 3x3 board and 3 in row to win.
 // TODO: In general a row in each row, a column in each column and two diagonals for a square board.
-function calculateWinner(squares) {
+function calculateWinner(squares, characteristicLength) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -30,9 +30,10 @@ function calculateWinner(squares) {
  * Takes a linear index for a game square and returns the x,y coordinates
  * of the square, 0 indexed, counting left to right, top to bottom.
  * @param  {Number} index linear index of the square
+ * @param  {Number} characteristicLength the board height, width and win line length
  * @return {Array}       x,y coordinates of the square
  */
-function indexToCoords(index) {
+function indexToCoords(index, characteristicLength) {
   const x = index % characteristicLength;
   const y = Math.trunc(index/characteristicLength);
 

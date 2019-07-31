@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {getPlayer, calculateWinner, indexToCoords, repeat} from './pure-functions.js'
-import {characteristicLength as length} from './game-config.js';
+import {getPlayer, calculateWinner, indexToCoords, repeat} from './game-functions.js'
+import {characteristicLength} from './game-config.js';
 
 import './index.css';
 
@@ -37,7 +37,7 @@ class Board extends React.Component {
     const renderRow = () => {
       return (
         <div className="board-row" key={'row'+(rowCounter++)}>
-          {repeat(length, () => this.renderSquare(i++))}
+          {repeat(characteristicLength, () => this.renderSquare(i++))}
         </div>
       );
     }
@@ -45,7 +45,7 @@ class Board extends React.Component {
     // For each row render a row
     return (
       <div>
-        {repeat(length, renderRow)}
+        {repeat(characteristicLength, renderRow)}
       </div>
     );
   }
@@ -59,9 +59,11 @@ class Game extends React.Component {
       const currentMusicIndex = Math.floor(Math.random()*Math.floor(music.length));
       const currentMusic = music[currentMusicIndex];
 
+      const numSquares = characteristicLength * characteristicLength;
+
       this.state = {
         history: [{
-          squares: Array(length * length).fill(null),
+          squares: Array(numSquares).fill(null),
           move: 'No moves'
         }],
         stepNumber: 0,
@@ -83,9 +85,9 @@ class Game extends React.Component {
     const currentPlayer = getPlayer(this.state.playerOneNext);
     squares[i] = currentPlayer;
 
-    const [xCoord, yCoord] = indexToCoords(i);
+    const [xCoord, yCoord] = indexToCoords(i, characteristicLength);
 
-    const winner = calculateWinner(squares);
+    const winner = calculateWinner(squares, characteristicLength);
     this.setState({
       history: history.concat([{
         squares: squares,
