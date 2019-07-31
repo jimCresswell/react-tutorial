@@ -101,7 +101,7 @@ ol, ul {
 
 .game-info .status {
   max-width: 16em;
-  padding: 0.1em;
+  padding: 0.4em;
   margin-left: 1em;
   background: rgba(0, 0, 0, 0.6);
   border: 5px solid black;
