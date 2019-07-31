@@ -4,26 +4,50 @@ function getPlayer(playerOneNext) {
   return playerOneNext ? playerOneChar : playerTwoChar;
 }
 
-// Assumes 3x3 board and 3 in row to win.
-// TODO: In general a row in each row, a column in each column and two diagonals for a square board.
-function calculateWinner(squares, characteristicLength) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
+function generateWinningLines(length) {
+  const rows = Array(length)
+                .fill(true)
+                .map((v, i) => Array(length)
+                                .fill(i*length)
+                                .map((v, i) => v+i)
+                );
+
+  const columns = Array(length)
+                    .fill(true)
+                    .map((v, i) => Array(length)
+                                    .fill(i)
+                                    .map((v, i) => v + i*length)
+                    );
+
+const diagonals = Array(2)
+                    .fill(true)
+                    .map((v,i) => Array(length)
+                                    .fill(i)
+                                    .map((v, i) => i*(length+1-v) + v*(length-i-v))
+                    );
+
+  // All the potential winning lines.
+  return [].concat(rows, columns, diagonals);
+}
+
+function calculateWinner(squares, length) {
+  // Get all the potential winning lines.
+  const lines = generateWinningLines(length);
+
+  const winner = lines
+    // For each potential winning line get the current played characters from the game.
+    .map(indices => indices.map(index => squares[index]))
+    // Remove lines which are not full.
+    .filter((line) => line.every((v) => v!==null))
+    // Remove lines where not all the characters are the same.
+    .filter((line) => line.every((v,i,a) => a[0]===v))
+    // Any lines remaining are winning lines.
+    // Map to first instance of winning character and extract.
+    // Reduce to single character or null.
+    .map((lines) => lines[0])[0] || null;
+
+  // Will be a player character or null.
+  return winner;
 }
 
 /**
@@ -51,4 +75,4 @@ function repeat(n, f) {
  return Array(n).fill(true).map(() => f());
 }
 
-export {getPlayer, calculateWinner, indexToCoords, repeat};
+export {getPlayer, generateWinningLines, calculateWinner, indexToCoords, repeat};
