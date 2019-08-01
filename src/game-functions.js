@@ -90,4 +90,13 @@ function repeat(n, f) {
  return Array(n).fill(true).map(() => f());
 }
 
-export {getPlayer, generateWinningLines, calculateWinner, indexToCoords, repeat};
+/**
+ * Return a random array index between 0 and length-1
+ * @param  {Number} length Length of the array to produce an index for.
+ * @return {Number}     Random integer index between 0 and length-1.
+ */
+function randIndex(length) {
+  return Math.floor(Math.random()*Math.floor(length));
+}
+
+export {getPlayer, generateWinningLines, calculateWinner, indexToCoords, repeat, randIndex};

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {getPlayer, calculateWinner, indexToCoords, repeat} from './game-functions.js'
+import {getPlayer, calculateWinner, indexToCoords, repeat, randIndex} from './game-functions.js'
 import {characteristicLength} from './game-config.js';
+import {wopr} from './ai.js';
 
 import './index.css';
 
@@ -56,10 +57,13 @@ class Game extends React.Component {
       super(props);
 
       const music = [anworldAudio, rtypeAudio, shadowAudio];
-      const currentMusicIndex = Math.floor(Math.random()*Math.floor(music.length));
+      const currentMusicIndex = randIndex(music.length);
       const currentMusic = music[currentMusicIndex];
 
       const numSquares = characteristicLength * characteristicLength;
+
+      // Synchronous state outside of components, that's got to be an antipattern.
+      this.gameLock=false;
 
       this.state = {
         history: [{
@@ -77,12 +81,12 @@ class Game extends React.Component {
       }
   }
 
-  // This function advances the game logic.
-  handleClick(i) {
+  haveAGo(i) {
     const history = this.state.history.slice(0, this.state.stepNumber+1);
     const current  = history[history.length - 1];
     const squares = current.squares.slice();
 
+    // If there is a winner or the square is not empty no action is needed.
     if (this.state.winner || squares[i]) return;
 
     const currentPlayer = getPlayer(this.state.playerOneNext);
@@ -107,6 +111,44 @@ class Game extends React.Component {
       isDraw: isDraw,
       winner: winner,
       winningLine: winningLine,
+    });
+  }
+
+  // This function advances the game logic.
+  handleClick(i) {
+
+    // The game board UI needs to be disabled until human and computer goes
+    // are finished otherwise a fast clicker can have the computer's go.
+    if (this.gameLock) return;
+    this.gameLock = true;
+
+    // Have the human go.
+    this.haveAGo(i);
+
+    // setState can be asynch. Can pass callbacks to setState.
+    // Need to research React specific patterns for handling the next
+    // action (state change) being dependent on the previous state.
+    // For now force a render cycle to complete state update.
+    // https://reactjs.org/docs/react-component.html#forceUpdate
+    this.forceUpdate(() => {
+      // Have the computer go.
+      // Assume computer is player two.
+      const history = this.state.history.slice(0, this.state.stepNumber+1);
+      const current  = history[history.length - 1];
+      const squares = current.squares.slice();
+      const playerOne = getPlayer(true);
+      const playerTwo = getPlayer(false);
+
+      const computerSquareChoice = wopr(squares, playerTwo, playerOne);
+
+      // Make it seem like the computer is thinking...
+      const delay = 300 + Math.floor(Math.random()*500);
+      setTimeout(() => {
+        this.haveAGo(computerSquareChoice);
+
+        // Re-enable the board UI.
+        this.gameLock=false;
+      }, delay);
     });
   }
 
