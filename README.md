@@ -1,3 +1,9 @@
+# Triple T
+
+This started off as the introductory [React tutorial](https://reactjs.org/tutorial/tutorial.html) Tic-Tac-Toe game, then I added 80s movie references, plenty of 80s style flashing colours, chiptunes, a computer opponent and "of course some tests.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
