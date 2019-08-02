@@ -103,19 +103,6 @@ ol, ul {
   margin-top: 1em;
 }
 
-.game-info .music {
-  margin-left: 1em;
-}
-
-.music figcaption {
-  padding: 0.4em;
-  margin-bottom: 0.2em;
-  background: rgba(0, 0, 0, 0.6);
-}
-.music figcaption a {
-  color: white;
-}
-
 .game-info .status {
   max-width: 16em;
   padding: 0.4em;
@@ -130,17 +117,45 @@ ol, ul {
 
 .game-info button {
   font-family: monospace;
+  border: 3px solid black;
   opacity: 0.8;
 }
 
-.game-info .current,
-.game-info .current button {
+.game-info .reverse-history {
+  position: relative;
+  font-size: 1.4em;
+  padding: 0;
+  margin-left: 1.6em;
+  background-color: white;
+}
+
+.game-info .history {
+  margin-top: 0.3em;
+}
+
+.game-info .history li {
+  border: 3px solid transparent;
+}
+.game-info .history .current,
+.game-info .history .current button {
   font-weight: 900;
 }
-.game-info .current button {
-  border: 3px solid black;
+.game-info .history .current button {
+  border: 3px solid white;
   opacity: 1;
 }
-.game-info .highlight {
+.game-info .history .highlight {
   animation: attention 1s infinite;
+}
+
+.music {
+  margin-left: 1em;
+}
+.music figcaption {
+  padding: 0.4em;
+  margin-bottom: 0.2em;
+  background: rgba(0, 0, 0, 0.6);
+}
+.music figcaption a {
+  color: white;
 }

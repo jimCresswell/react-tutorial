@@ -15,7 +15,7 @@ function Square(props) {
   const classNames = `square ${props.shouldHighlight ? 'highlight' : ''} ${props.isOnWinningLine ? 'winner':''}`;
   return (
     <button className={classNames} onClick={props.onClick} onMouseOver={props.onMouseOver} onMouseOut={props.onMouseOut}>
-      {props.value}
+      <span role="img" aria-label="player character">{props.playerCharacter}</span>
     </button>
   );
 }
@@ -29,7 +29,7 @@ class Board extends React.Component {
     return (
       <Square
         key={'square'+i}
-        value={this.props.squares[i]}
+        playerCharacter={this.props.squares[i]}
         isOnWinningLine={isOnWinningLine}
         shouldHighlight={shouldHighlight}
         onMouseOver = {() => this.props.onMouseOver(i)}
@@ -123,6 +123,7 @@ class Game extends React.Component {
       winner: winner,
       winningLine: winningLine,
       highlight: null,
+      reverseHistory: false
     });
   }
 
@@ -135,7 +136,7 @@ class Game extends React.Component {
   }
 
   // This function advances the game logic.
-  handleClick(i) {
+  handleBoardClick(i) {
 
     // The game board UI needs to be disabled until human and computer goes
     // are finished otherwise a fast clicker can have the computer's go.
@@ -184,6 +185,12 @@ class Game extends React.Component {
     });
   }
 
+  reverseHistory() {
+    this.setState({
+      reverseHistory: !this.state.reverseHistory
+    });
+  }
+
   handleEnded() {
     const music = this.state.music;
     let currentMusicIndex = this.state.currentMusicIndex;
@@ -204,7 +211,8 @@ class Game extends React.Component {
     const winner = this.state.winner;
     const isDraw = this.state.isDraw;
     const winningLine = this.state.winningLine;
-    const highlight = this.state.highlight
+    const highlight = this.state.highlight;
+    const reverseHistory = this.state.reverseHistory;
 
     const moveListItems = history.map((step, moveNumber) => {
       const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : 'Go to game start';
@@ -241,14 +249,15 @@ class Game extends React.Component {
               squares={current.squares}
               winningLine = {winningLine}
               highlight = {highlight}
-              onClick={(i) => this.handleClick(i)}
+              onClick={(i) => this.handleBoardClick(i)}
               onMouseOver={(i) => this.handleMouseOver(i)}
               onMouseOut={(i) => this.handleMouseOut(i)}
             />
           </div>
           <div className="game-info">
             <div className={`status ${winner?'winner':''}`}>{status}</div>
-            <ol>{moveListItems}</ol>
+            <button className="reverse-history" onClick={() => this.reverseHistory()}><span role="img" aria-label="reverse list order">🔃</span></button>
+            <ol className="history">{reverseHistory ? moveListItems.reverse() : moveListItems}</ol>
           </div>
           <figure className="music">
             <figcaption>Music from <a href="https://retro.sx">retro.sx</a></figcaption>
