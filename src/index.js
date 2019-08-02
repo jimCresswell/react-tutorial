@@ -96,8 +96,8 @@ class Game extends React.Component {
     const current  = history[history.length - 1];
     const squares = current.squares.slice();
 
-    // If there is a winner or the square is not empty no action is needed.
-    if (this.state.winner || squares[i]) return;
+    // If there is a winner or draw or the square is not empty no action is needed.
+    if (this.state.winner || this.state.isDraw || squares[i]) return;
 
     const currentPlayer = getPlayer(this.state.playerOneNext);
     squares[i] = currentPlayer;
