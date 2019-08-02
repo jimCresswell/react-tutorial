@@ -1,6 +1,9 @@
 # Triple T
 
-This started off as the introductory [React tutorial](https://reactjs.org/tutorial/tutorial.html) Tic-Tac-Toe game, then I added tests, generalised the logic to support NxN boards including win detection, added 80s movie and game references, chiptunes, and a computer opponent. 
+This started off as the introductory [React tutorial](https://reactjs.org/tutorial/tutorial.html) Tic-Tac-Toe game, then I added tests, generalised the logic to support NxN boards including win detection, added 80s movie and game references, chiptunes, and a computer opponent.
+
+## To DO
+* Not sure if it is a bug, but if you got back in history to one of your previous moves then take a new next move you have effectively swapped players with computer.
 
 ---
 
