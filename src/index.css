@@ -117,16 +117,18 @@ ol, ul {
 
 .game-info button {
   font-family: monospace;
-  border: 3px solid black;
+  border: none;
   opacity: 0.8;
 }
 
 .game-info .reverse-history {
-  position: relative;
   font-size: 1.4em;
+  width:1.6em;
+  height:1.6em;
   padding: 0;
-  margin-left: 1.6em;
+  margin-left: 1.7em;
   background-color: white;
+  opacity: 0.85;
 }
 
 .game-info .history {
@@ -135,6 +137,9 @@ ol, ul {
 
 .game-info .history li {
   border: 3px solid transparent;
+}
+.game-info .history button {
+  border: 3px solid black;
 }
 .game-info .history .current,
 .game-info .history .current button {
