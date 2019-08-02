@@ -2,17 +2,30 @@
 @keyframes blinking {
   0%{
     background-color: #ff3d50;
-    border: 5px solid #6565f2;
+    border: 3px solid #6565f2;
   }
   50%{
     background-color: #55d66b;
-    border: 5px solid #126620;
+    border: 3px solid #126620;
   }
   100%{
     background-color: #222291;
-    border: 5px solid #871924;
+    border: 3px solid #871924;
   }
 }
+
+@keyframes attention {
+  0%{
+    border: 3px solid Red;
+  }
+  50%{
+    border: 3px solid Lightgrey;
+  }
+  100%{
+    border: 3px solid Red;
+  }
+}
+
 
 body {
   font: 14px monospace;
@@ -51,6 +64,9 @@ ol, ul {
 }
 .square.winner {
   animation: blinking 1.2s infinite;
+}
+.square.highlight {
+  animation: attention 1s infinite;
 }
 .square:focus {
   outline: none;
@@ -117,7 +133,14 @@ ol, ul {
   opacity: 0.8;
 }
 
-.game-info .highlight,
-.game-info .highlight button {
-  font-weight: bolder;
+.game-info .current,
+.game-info .current button {
+  font-weight: 900;
+}
+.game-info .current button {
+  border: 3px solid black;
+  opacity: 1;
+}
+.game-info .highlight {
+  animation: attention 1s infinite;
 }

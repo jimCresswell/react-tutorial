@@ -12,9 +12,9 @@ import rtypeAudio from './audio/r-type-title.mp3';
 import shadowAudio from './audio/shadow-of-the-beast-intro.mp3';
 
 function Square(props) {
-  const classNames = `square ${props.isOnWinningLine ? 'winner':''}`;
+  const classNames = `square ${props.shouldHighlight ? 'highlight' : ''} ${props.isOnWinningLine ? 'winner':''}`;
   return (
-    <button className={classNames} onClick={props.onClick}>
+    <button className={classNames} onClick={props.onClick} onMouseOver={props.onMouseOver} onMouseOut={props.onMouseOut}>
       {props.value}
     </button>
   );
@@ -24,12 +24,16 @@ class Board extends React.Component {
   renderSquare(i) {
     const winningLine = this.props.winningLine;
     const isOnWinningLine = winningLine!==null && winningLine.includes(i);
+    const shouldHighlight = this.props.highlight === i;
 
     return (
       <Square
         key={'square'+i}
         value={this.props.squares[i]}
         isOnWinningLine={isOnWinningLine}
+        shouldHighlight={shouldHighlight}
+        onMouseOver = {() => this.props.onMouseOver(i)}
+        onMouseOut = {() => this.props.onMouseOut(i)}
         onClick={() => this.props.onClick(i)}
       />
     )
@@ -73,6 +77,7 @@ class Game extends React.Component {
       this.state = {
         history: [{
           squares: Array(numSquares).fill(null),
+          indexPlayed: null,
           move: 'No moves'
         }],
         stepNumber: 0,
@@ -109,6 +114,7 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
+        indexPlayed: i,
         move: currentPlayer + ' at (x:' + xCoord + ', y:' + yCoord + ')',
       }]),
       stepNumber: history.length,
@@ -116,7 +122,16 @@ class Game extends React.Component {
       isDraw: isDraw,
       winner: winner,
       winningLine: winningLine,
+      highlight: null,
     });
+  }
+
+  // Record which elements are being hovered over in the game state.
+  handleMouseOver(i) {
+    this.setState({highlight: i});
+  }
+  handleMouseOut(i) {
+    this.setState({highlight: null});
   }
 
   // This function advances the game logic.
@@ -176,8 +191,6 @@ class Game extends React.Component {
 
     let currentMusic = music[currentMusicIndex];
 
-
-    console.log("changing music");
     this.setState({
       currentMusicIndex: currentMusicIndex,
       currentMusic: currentMusic
@@ -186,17 +199,25 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
+    const stepNumber = this.state.stepNumber;
     const current = history[this.state.stepNumber];
     const winner = this.state.winner;
     const isDraw = this.state.isDraw;
     const winningLine = this.state.winningLine;
+    const highlight = this.state.highlight
 
-    const moves = history.map((step, moveNumber) => {
-
+    const moveListItems = history.map((step, moveNumber) => {
       const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : 'Go to game start';
+      const isCurrent = moveNumber===stepNumber;
+      const shouldHighlight = highlight!==null && highlight===step.indexPlayed;
+      const classNames = `${isCurrent ? 'current' : ''} ${shouldHighlight ? 'highlight' : ''}`;
       return (
-        <li key={moveNumber} className={moveNumber===this.state.stepNumber?'highlight':''}>
-          <button onClick={() => this.jumpTo(moveNumber)}>{desc}</button>
+        <li key={moveNumber} className={classNames}>
+          <button
+            onClick={() => this.jumpTo(moveNumber)}
+            onMouseOver={() => this.handleMouseOver(step.indexPlayed)}
+            onMouseOut={() => this.handleMouseOut(step.indexPlayed)}
+            >{desc}</button>
         </li>
       );
     });
@@ -219,12 +240,15 @@ class Game extends React.Component {
             <Board
               squares={current.squares}
               winningLine = {winningLine}
+              highlight = {highlight}
               onClick={(i) => this.handleClick(i)}
+              onMouseOver={(i) => this.handleMouseOver(i)}
+              onMouseOut={(i) => this.handleMouseOut(i)}
             />
           </div>
           <div className="game-info">
             <div className={`status ${winner?'winner':''}`}>{status}</div>
-            <ol>{moves}</ol>
+            <ol>{moveListItems}</ol>
           </div>
           <figure className="music">
             <figcaption>Music from <a href="https://retro.sx">retro.sx</a></figcaption>
