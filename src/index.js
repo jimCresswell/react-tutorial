@@ -12,8 +12,9 @@ import rtypeAudio from './audio/r-type-title.mp3';
 import shadowAudio from './audio/shadow-of-the-beast-intro.mp3';
 
 function Square(props) {
+  const classNames = `square ${props.isOnWinningLine ? 'winner':''}`;
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className={classNames} onClick={props.onClick}>
       {props.value}
     </button>
   );
@@ -21,10 +22,14 @@ function Square(props) {
 
 class Board extends React.Component {
   renderSquare(i) {
+    const winningLine = this.props.winningLine;
+    const isOnWinningLine = winningLine!==null && winningLine.includes(i);
+
     return (
       <Square
         key={'square'+i}
         value={this.props.squares[i]}
+        isOnWinningLine={isOnWinningLine}
         onClick={() => this.props.onClick(i)}
       />
     )
@@ -153,12 +158,14 @@ class Game extends React.Component {
   }
 
   jumpTo(step) {
-    /* TODO: Move playerOneNext and winner into the history array,
+    /* TODO: Move all changeable state except stepNumber into the history array,
     then we only need to set `stepNumber` here */
     this.setState({
       stepNumber: step,
       playerOneNext: (step % 2) === 0,
-      winner: null
+      winner: null,
+      isDraw: false,
+      winningLine: null,
     });
   }
 
@@ -182,6 +189,7 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = this.state.winner;
     const isDraw = this.state.isDraw;
+    const winningLine = this.state.winningLine;
 
     const moves = history.map((step, moveNumber) => {
 
@@ -210,6 +218,7 @@ class Game extends React.Component {
           <div className="game-board">
             <Board
               squares={current.squares}
+              winningLine = {winningLine}
               onClick={(i) => this.handleClick(i)}
             />
           </div>
