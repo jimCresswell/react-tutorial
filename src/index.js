@@ -157,10 +157,10 @@ class Game extends React.Component {
       const history = this.state.history.slice(0, this.state.stepNumber+1);
       const current  = history[history.length - 1];
       const squares = current.squares.slice();
-      const playerOne = getPlayer(true);
-      const playerTwo = getPlayer(false);
+      const computerCharacter = getPlayer(this.state.playerOneNext);
+      const humanCharacter = getPlayer(!this.state.playerOneNext);
 
-      const computerSquareChoice = wopr(squares, playerTwo, playerOne);
+      const computerSquareChoice = wopr(squares, computerCharacter, humanCharacter);
 
       // Make it seem like the computer is thinking...
       const delay = 300 + Math.floor(Math.random()*500);
