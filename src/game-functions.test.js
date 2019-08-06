@@ -1,4 +1,4 @@
-import {getPlayer, generateWinningLines, calculateWinner, indexToCoords} from './game-functions.js';
+import {getPlayer, generateWinningLines, calculateWinner, indexToCoords, getEmptySquareIndices} from './game-functions.js';
 import {characteristicLength, playerOneChar, playerTwoChar} from './game-config.js';
 
 describe('Game logic functions', () => {
@@ -63,5 +63,11 @@ describe('Game logic functions', () => {
       [2, 4, 6],
     ];
     expect(potentialWinningLines).toStrictEqual(expectedWinningLines);
+  });
+
+  test('Returns only the empty indicies', () => {
+    const input = ['hello', null, 1, null, false, null, 0];
+    const expectedIndices = [1, 3, 5];
+    expect(getEmptySquareIndices(input)).toStrictEqual(expectedIndices);
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {getPlayer, calculateWinner, indexToCoords, repeat, randIndex} from './game-functions.js'
-import {characteristicLength} from './game-config.js';
+import {characteristicLength, computerPlayerDifficulty} from './game-config.js';
 import {wopr} from './ai.js';
 
 import './index.css';
@@ -160,7 +160,7 @@ class Game extends React.Component {
       const computerCharacter = getPlayer(this.state.playerOneNext);
       const humanCharacter = getPlayer(!this.state.playerOneNext);
 
-      const computerSquareChoice = wopr(squares, computerCharacter, humanCharacter);
+      const computerSquareChoice = wopr(computerPlayerDifficulty, squares, computerCharacter, humanCharacter);
 
       // Make it seem like the computer is thinking...
       const delay = 300 + Math.floor(Math.random()*500);

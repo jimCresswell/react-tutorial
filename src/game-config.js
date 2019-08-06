@@ -4,4 +4,12 @@ const characteristicLength = 3;
 const playerOneChar = '🚀';
 const playerTwoChar = '🛰️';
 
-export {characteristicLength, playerOneChar, playerTwoChar};
+// easy, medium or hard.
+const computerPlayerDifficulty = 'hard';
+
+export {
+  characteristicLength,
+  playerOneChar,
+  playerTwoChar,
+  computerPlayerDifficulty
+};

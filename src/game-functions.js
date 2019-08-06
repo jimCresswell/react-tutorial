@@ -80,6 +80,20 @@ function indexToCoords(index, characteristicLength) {
 }
 
 /**
+ * Get the indices of empty squares on the board.
+ *
+ * If a square is empty (value==null) then grab its index otherwise return null.
+ * Then throw away the "null" indices, leaving a list of indices of empty squares.
+ * @param  {Array} squares The game board.
+ * @return {Array}         The list of indices of empty squares.
+ */
+function getEmptySquareIndices(squares) {
+  return squares
+          .map((v,i) => v===null ? i : null)
+          .filter((v) => v!==null);
+}
+
+/**
  * Create an array n items long and fill it with the result of invoking function f.
  * For use with jsx markup descriptions.
  * @param  {Number} n length of array
@@ -99,4 +113,4 @@ function randIndex(length) {
   return Math.floor(Math.random()*Math.floor(length));
 }
 
-export {getPlayer, generateWinningLines, calculateWinner, indexToCoords, repeat, randIndex};
+export {getPlayer, generateWinningLines, calculateWinner, indexToCoords, getEmptySquareIndices, repeat, randIndex};
