@@ -265,6 +265,7 @@ class Game extends React.Component {
               <p>Your browser does not support the <code>audio</code> element.</p>
             </audio>
           </figure>
+          <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
         </div>
       </div>
     );

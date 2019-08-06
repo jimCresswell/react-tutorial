@@ -95,18 +95,17 @@ ol, ul {
 
 .game-board {
   margin-top: 1.2em;
-  margin-left: 2em;
+  margin-left: 1.4em;
 }
 
 .game-info {
   margin-left: 20px;
-  margin-top: 1em;
+  margin-top: 1.4em;
 }
 
 .game-info .status {
   max-width: 16em;
   padding: 0.4em;
-  margin-left: 1em;
   background: rgba(0, 0, 0, 0.6);
   border: 5px solid black;
 }
@@ -154,7 +153,8 @@ ol, ul {
 }
 
 .music {
-  margin-left: 1em;
+  margin-left: 1.4em;
+  margin-top: 1.4em;
 }
 .music figcaption {
   padding: 0.4em;
@@ -162,5 +162,15 @@ ol, ul {
   background: rgba(0, 0, 0, 0.6);
 }
 .music figcaption a {
+  color: white;
+}
+
+.source-link {
+  margin-top: 2em;
+  margin-left: 1.4em;
+  padding: 0.4em;
+  background: rgba(0, 0, 0, 0.6);
+}
+.source-link a {
   color: white;
 }
