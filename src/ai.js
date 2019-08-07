@@ -63,6 +63,13 @@ function selectBestSquareToWin(squares, opponentCharacter) {
 
   // 2.
   const remainingWinningLines = filterByAvailability(squares, winningLines, opponentCharacter);
+  // If there are no more winning moves return a random empty square.
+  if (remainingWinningLines.length === 0) {
+    return ({
+      squareIndex: selectRandomEmptySquare(squares),
+      weight: 0
+    });
+  }
 
   // 3.
   const winningLineWeights = remainingWinningLines.map((line) => {
@@ -109,12 +116,15 @@ function getBestAttack(squares, opponentCharacter) {
  * @return {Number}                  The index in `squares` representing the computer move choice.
  */
 function wopr(difficulty, squares, myCharacter, opponentCharacter) {
+  let squareIndex;
   if (difficulty === "easy") {
-    return selectRandomEmptySquare(squares);
+    squareIndex = selectRandomEmptySquare(squares);
   } else if (difficulty === "medium") {
-    return getBestAttack(squares, opponentCharacter);
+    squareIndex = getBestAttack(squares, opponentCharacter);
+  } else {
+    squareIndex = getBestSquare(squares, myCharacter, opponentCharacter);
   }
-  return getBestSquare(squares, myCharacter, opponentCharacter);
+  return squareIndex;
 }
 
 export {wopr};
