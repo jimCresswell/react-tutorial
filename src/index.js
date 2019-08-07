@@ -107,9 +107,6 @@ class Game extends React.Component {
     const current  = history[history.length - 1];
     const squares = current.squares.slice();
 
-    // If there is a winner or draw or the square is not empty no action is needed.
-    if (this.state.winner || this.state.isDraw || squares[i]) return;
-
     const currentPlayer = getPlayer(this.state.playerOneNext);
     squares[i] = currentPlayer;
 
@@ -148,13 +145,20 @@ class Game extends React.Component {
 
   // This function advances the game logic.
   handleBoardClick(i) {
+    const history = this.state.history.slice(0, this.state.stepNumber+1);
+    const current  = history[history.length - 1];
+    const squares = current.squares.slice();
+
+    // If there is a winner or draw or the square is not empty no action is needed.
+    if (this.state.winner || this.state.isDraw || squares[i]) return;
+
 
     // The game board UI needs to be disabled until human and computer goes
     // are finished otherwise a fast clicker can have the computer's go.
     if (this.gameLock) return;
     this.gameLock = true;
 
-    // Have the human go.
+    // Have the human go. This updates game state.
     this.haveAGo(i);
 
     // If the second player is human don't invoke AI.
@@ -163,20 +167,22 @@ class Game extends React.Component {
         return;
     }
 
+    // Have the computer go.
     // setState can be asynch. Can pass callbacks to setState.
     // Need to research React specific patterns for handling the next
     // action (state change) being dependent on the previous state.
     // For now force a render cycle to complete state update.
     // https://reactjs.org/docs/react-component.html#forceUpdate
     this.forceUpdate(() => {
-      // Have the computer go.
-      // Assume computer is player two.
       const history = this.state.history.slice(0, this.state.stepNumber+1);
       const current  = history[history.length - 1];
       const squares = current.squares.slice();
       const computerCharacter = getPlayer(this.state.playerOneNext);
       const humanCharacter = getPlayer(!this.state.playerOneNext);
       const difficulty = this.state.difficulty;
+
+      // If the game ended with the last click then no further action is needed.
+      if (this.state.winner || this.state.isDraw) return;
 
       const computerSquareChoice = wopr(difficulty, squares, computerCharacter, humanCharacter);
 
