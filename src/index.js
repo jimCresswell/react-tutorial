@@ -290,7 +290,7 @@ class Game extends React.Component {
         }, 130);
       }
     } else if (isDraw) {
-      status = 'It\'s a tie. How about a nice game of chess?'
+      status = <span>It's a tie. How about a nice <a href="https://www.chess.com/play/computer">game of chess?</a></span>;
     } else if (winner) {
       status = 'Winner: ' + this.state.winner;
     } else {
