@@ -321,7 +321,7 @@ class Game extends React.Component {
               <p>Your browser does not support the <code>audio</code> element.</p>
             </audio>
             <div className="difficulty">
-              <label>Difficulty: <select value={difficulty} onChange={(e) => this.handleDifficultyChange(e)}>{difficultyOptionEls}</select></label>
+              <label>Opponent: <select value={difficulty} onChange={(e) => this.handleDifficultyChange(e)}>{difficultyOptionEls}</select></label>
             </div>
             <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
           </figure>
