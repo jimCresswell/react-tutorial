@@ -168,6 +168,16 @@ ol, ul {
   color: white;
 }
 
+.difficulty {
+  margin-top: 0.6em;
+  padding: 0.4em;
+  background: rgba(0, 0, 0, 0.6);
+}
+.difficulty select {
+  width: 11em;
+}
+
+
 .source-link {
   margin-top: 2em;
   padding: 0.4em;

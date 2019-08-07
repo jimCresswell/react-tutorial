@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import {getPlayer, calculateWinner, indexToCoords, repeat, randIndex} from './game-functions.js'
 import {
   characteristicLength,
-  computerPlayerDifficulty,
+  initialDifficulty,
+  difficultyOptions,
   startMessage as initialStartMessage
 } from './game-config.js';
 import {wopr} from './ai.js';
@@ -15,6 +16,7 @@ import anworldAudio from './audio/another-world-intro.mp3';
 import rtypeAudio from './audio/r-type-title.mp3';
 import shadowAudio from './audio/shadow-of-the-beast-intro.mp3';
 
+// The game board squares.
 function Square(props) {
   const classNames = `square ${props.shouldHighlight ? 'highlight' : ''} ${props.isOnWinningLine ? 'winner':''}`;
   return (
@@ -24,6 +26,7 @@ function Square(props) {
   );
 }
 
+// The game board.
 class Board extends React.Component {
   renderSquare(i) {
     const winningLine = this.props.winningLine;
@@ -65,6 +68,7 @@ class Board extends React.Component {
   }
 }
 
+// The top level Game object that holds state and controls rendering.
 class Game extends React.Component {
   constructor(props) {
       super(props);
@@ -93,6 +97,8 @@ class Game extends React.Component {
         music: music,
         currentMusicIndex: currentMusicIndex,
         currentMusic: currentMusic,
+        difficulty: initialDifficulty,
+        difficultyOptions: difficultyOptions
       }
   }
 
@@ -151,6 +157,12 @@ class Game extends React.Component {
     // Have the human go.
     this.haveAGo(i);
 
+    // If the second player is human don't invoke AI.
+    if(this.state.difficulty === 'human') {
+        this.gameLock=false;
+        return;
+    }
+
     // setState can be asynch. Can pass callbacks to setState.
     // Need to research React specific patterns for handling the next
     // action (state change) being dependent on the previous state.
@@ -164,8 +176,9 @@ class Game extends React.Component {
       const squares = current.squares.slice();
       const computerCharacter = getPlayer(this.state.playerOneNext);
       const humanCharacter = getPlayer(!this.state.playerOneNext);
+      const difficulty = this.state.difficulty;
 
-      const computerSquareChoice = wopr(computerPlayerDifficulty, squares, computerCharacter, humanCharacter);
+      const computerSquareChoice = wopr(difficulty, squares, computerCharacter, humanCharacter);
 
       // Make it seem like the computer is thinking...
       const delay = 300 + Math.floor(Math.random()*500);
@@ -209,6 +222,13 @@ class Game extends React.Component {
     });
   }
 
+  handleDifficultyChange(e) {
+    const newDifficulty = e.target.value;
+    this.setState({
+      difficulty: newDifficulty
+    });
+  }
+
   render() {
     const history = this.state.history;
     const stepNumber = this.state.stepNumber;
@@ -219,6 +239,8 @@ class Game extends React.Component {
     const highlight = this.state.highlight;
     const reverseHistory = this.state.reverseHistory;
     const startMessage = this.state.startMessage.slice();
+    const difficulty = this.state.difficulty;
+    const difficultyOptions = this.state.difficultyOptions.slice();
 
     const moveListItems = history.map((step, moveNumber) => {
       const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : 'Go to game start';
@@ -238,6 +260,12 @@ class Game extends React.Component {
       );
     });
 
+    const difficultyOptionEls = difficultyOptions.map((option) => {
+      return (
+        <option key={option} value={option}>{option}</option>
+      );
+    });
+
     let status;
     // At game start, loop over the contents of the start message by repeatedly
     // setting state in a timeout causing render to be called.
@@ -246,7 +274,6 @@ class Game extends React.Component {
       // Set message with blinking cursor every other iteration.
       status = startMessage.concat(initialStartMessage.length%2===1 ? '_' : '');
       if(initialStartMessage.length) {
-        console.log(initialStartMessage.length);
         let letter = initialStartMessage.shift();
         setTimeout(() => {
           let currentMessage = startMessage.concat(letter);
@@ -287,6 +314,9 @@ class Game extends React.Component {
             <audio controls src={this.state.currentMusic} preload="none" autoPlay={true} onEnded={() => this.handleEnded()}>
               <p>Your browser does not support the <code>audio</code> element.</p>
             </audio>
+            <div className="difficulty">
+              <label>Difficulty: <select value={difficulty} onChange={(e) => this.handleDifficultyChange(e)}>{difficultyOptionEls}</select></label>
+            </div>
             <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
           </figure>
         </div>

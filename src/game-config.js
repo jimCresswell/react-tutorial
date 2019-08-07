@@ -5,7 +5,8 @@ const playerOneChar = '🚀';
 const playerTwoChar = '🛰️';
 
 // easy, medium or hard.
-const computerPlayerDifficulty = 'hard';
+const initialDifficulty = 'hard';
+const difficultyOptions = ['human', 'easy', 'medium', 'hard'];
 
 const startMessage = Array.from("SHALL WE PLAY A GAME?");
 
@@ -13,6 +14,7 @@ export {
   characteristicLength,
   playerOneChar,
   playerTwoChar,
-  computerPlayerDifficulty,
+  initialDifficulty,
+  difficultyOptions,
   startMessage
 };
