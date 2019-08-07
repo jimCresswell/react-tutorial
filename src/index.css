@@ -86,7 +86,6 @@ a {
 
 .background {
   background: center / 100% 100% no-repeat url('./images/wopr_super.jpg');
-  width: 100%;
   min-height: 80vh;
   padding: 1em;
   margin: auto;
@@ -96,8 +95,6 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 65em;
-  max-width: 90%;
   margin: auto;
 }
 
@@ -106,8 +103,6 @@ a {
   min-height: 14em;
   margin-top: 1.2em;
   margin-left: 1.4em;
-  /* Handle large boards. */
-  overflow: scroll;
 }
 
 .controls {
