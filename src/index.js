@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {getPlayer, calculateWinner, indexToCoords, repeat, randIndex} from './game-functions.js'
-import {characteristicLength, computerPlayerDifficulty} from './game-config.js';
+import {
+  characteristicLength,
+  computerPlayerDifficulty,
+  startMessage as initialStartMessage
+} from './game-config.js';
 import {wopr} from './ai.js';
 
 import './index.css';
@@ -80,6 +84,7 @@ class Game extends React.Component {
           indexPlayed: null,
           move: 'No moves'
         }],
+        startMessage: [],
         stepNumber: 0,
         playerOneNext: true,
         isDraw: false,
@@ -213,15 +218,18 @@ class Game extends React.Component {
     const winningLine = this.state.winningLine;
     const highlight = this.state.highlight;
     const reverseHistory = this.state.reverseHistory;
+    const startMessage = this.state.startMessage.slice();
 
     const moveListItems = history.map((step, moveNumber) => {
       const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : 'Go to game start';
       const isCurrent = moveNumber===stepNumber;
       const shouldHighlight = highlight!==null && highlight===step.indexPlayed;
-      const classNames = `${isCurrent ? 'current' : ''} ${shouldHighlight ? 'highlight' : ''}`;
+      const currentClass = `${isCurrent ? 'current' : ''}`;
+      const highlightClass = `${shouldHighlight ? 'highlight' : ''}`;
       return (
-        <li key={moveNumber} className={classNames}>
+        <li key={moveNumber} className={currentClass}>
           <button
+            className={highlightClass}
             onClick={() => this.jumpTo(moveNumber)}
             onMouseOver={() => this.handleMouseOver(step.indexPlayed)}
             onMouseOut={() => this.handleMouseOut(step.indexPlayed)}
@@ -231,8 +239,23 @@ class Game extends React.Component {
     });
 
     let status;
+    // At game start, loop over the contents of the start message by repeatedly
+    // setting state in a timeout causing render to be called.
+    // Creates typing effect.
     if (this.state.stepNumber===0) {
-      status = 'SHALL WE PLAY A GAME?';
+      // Set message with blinking cursor every other iteration.
+      status = startMessage.concat(initialStartMessage.length%2===1 ? '_' : '');
+      if(initialStartMessage.length) {
+        console.log(initialStartMessage.length);
+        let letter = initialStartMessage.shift();
+        setTimeout(() => {
+          let currentMessage = startMessage.concat(letter);
+          // This causes the rerender and so loop.
+          this.setState({
+            startMessage: currentMessage
+          })
+        }, 130);
+      }
     } else if (isDraw) {
       status = 'It\'s a tie. How about a nice game of chess?'
     } else if (winner) {
@@ -259,13 +282,13 @@ class Game extends React.Component {
             <button className="reverse-history" onClick={() => this.reverseHistory()}><span role="img" aria-label="reverse list order">🔃</span></button>
             <ol className="history">{reverseHistory ? moveListItems.reverse() : moveListItems}</ol>
           </div>
-          <figure className="music">
+          <figure className="controls">
             <figcaption>Music from <a href="https://retro.sx">retro.sx</a></figcaption>
             <audio controls src={this.state.currentMusic} preload="none" autoPlay={true} onEnded={() => this.handleEnded()}>
               <p>Your browser does not support the <code>audio</code> element.</p>
             </audio>
+            <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
           </figure>
-          <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
         </div>
       </div>
     );

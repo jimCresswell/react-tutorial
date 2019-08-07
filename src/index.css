@@ -94,17 +94,20 @@ ol, ul {
 }
 
 .game-board {
+  width: 14em;
+  height: 14em;
   margin-top: 1.2em;
   margin-left: 1.4em;
 }
 
 .game-info {
+  width: 23em;
   margin-left: 20px;
   margin-top: 1.4em;
 }
 
 .game-info .status {
-  max-width: 16em;
+  width: 16em;
   padding: 0.4em;
   background: rgba(0, 0, 0, 0.6);
   border: 5px solid black;
@@ -152,25 +155,21 @@ ol, ul {
   animation: attention 1s infinite;
 }
 
-.music {
+.controls {
   margin-left: 1.4em;
   margin-top: 1.4em;
 }
-.music figcaption {
+.controls figcaption {
   padding: 0.4em;
   margin-bottom: 0.2em;
   background: rgba(0, 0, 0, 0.6);
 }
-.music figcaption a {
+.controls a {
   color: white;
 }
 
 .source-link {
   margin-top: 2em;
-  margin-left: 1.4em;
   padding: 0.4em;
   background: rgba(0, 0, 0, 0.6);
-}
-.source-link a {
-  color: white;
 }
