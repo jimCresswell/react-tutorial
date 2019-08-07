@@ -104,8 +104,17 @@ a {
   margin-left: 1.4em;
 }
 
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+@media all and (min-width: 1024px) {
+  .controls {
+    flex-direction: row;
+  }
+}
+
 .game-info {
-  width: 23em;
   margin-left: 20px;
   margin-top: 1.4em;
 }
@@ -160,11 +169,11 @@ a {
   animation: attention 1s infinite;
 }
 
-.controls {
+.options {
   margin-left: 1.4em;
   margin-top: 1.4em;
 }
-.controls figcaption {
+.options figcaption {
   padding: 0.4em;
   margin-bottom: 0.2em;
   background: rgba(0, 0, 0, 0.6);

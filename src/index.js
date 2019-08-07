@@ -310,21 +310,23 @@ class Game extends React.Component {
               onMouseOut={(i) => this.handleMouseOut(i)}
             />
           </div>
-          <div className="game-info">
-            <div className={`status ${winner?'winner':''}`}>{status}</div>
-            <button className="reverse-history" onClick={() => this.reverseHistory()}><span role="img" aria-label="reverse list order">🔃</span></button>
-            <ol className="history">{reverseHistory ? moveListItems.reverse() : moveListItems}</ol>
-          </div>
-          <figure className="controls">
-            <figcaption>Music from <a href="https://retro.sx">retro.sx</a></figcaption>
-            <audio controls src={this.state.currentMusic} preload="none" autoPlay={true} onEnded={() => this.handleEnded()}>
-              <p>Your browser does not support the <code>audio</code> element.</p>
-            </audio>
-            <div className="difficulty">
-              <label>Opponent: <select value={difficulty} onChange={(e) => this.handleDifficultyChange(e)}>{difficultyOptionEls}</select></label>
+          <section className="controls">
+            <div className="game-info">
+              <div className={`status ${winner?'winner':''}`}>{status}</div>
+              <button className="reverse-history" onClick={() => this.reverseHistory()}><span role="img" aria-label="reverse list order">🔃</span></button>
+              <ol className="history">{reverseHistory ? moveListItems.reverse() : moveListItems}</ol>
             </div>
-            <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
-          </figure>
+            <figure className="options">
+              <figcaption>Music from <a href="https://retro.sx">retro.sx</a></figcaption>
+              <audio controls src={this.state.currentMusic} preload="none" autoPlay={true} onEnded={() => this.handleEnded()}>
+                <p>Your browser does not support the <code>audio</code> element.</p>
+              </audio>
+              <div className="difficulty">
+                <label>Opponent: <select value={difficulty} onChange={(e) => this.handleDifficultyChange(e)}>{difficultyOptionEls}</select></label>
+              </div>
+              <div className="source-link"><a href="https://github.com/jimCresswell/triple-t">Source code available here.</a></div>
+            </figure>
+          </section>
         </div>
       </div>
     );
