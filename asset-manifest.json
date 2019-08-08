@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/triple-t/static/css/main.77964c88.chunk.css",
+    "main.js": "/triple-t/static/js/main.bac0e181.chunk.js",
+    "main.js.map": "/triple-t/static/js/main.bac0e181.chunk.js.map",
+    "runtime~main.js": "/triple-t/static/js/runtime~main.6f8007f3.js",
+    "runtime~main.js.map": "/triple-t/static/js/runtime~main.6f8007f3.js.map",
+    "static/js/2.77bfa541.chunk.js": "/triple-t/static/js/2.77bfa541.chunk.js",
+    "static/js/2.77bfa541.chunk.js.map": "/triple-t/static/js/2.77bfa541.chunk.js.map",
+    "index.html": "/triple-t/index.html",
+    "precache-manifest.4ee45f939cb6527c687f8e15f9aba9ee.js": "/triple-t/precache-manifest.4ee45f939cb6527c687f8e15f9aba9ee.js",
+    "service-worker.js": "/triple-t/service-worker.js",
+    "static/css/main.77964c88.chunk.css.map": "/triple-t/static/css/main.77964c88.chunk.css.map",
+    "static/media/another-world-intro.mp3": "/triple-t/static/media/another-world-intro.906002dc.mp3",
+    "static/media/r-type-title.mp3": "/triple-t/static/media/r-type-title.34638760.mp3",
+    "static/media/shadow-of-the-beast-intro.mp3": "/triple-t/static/media/shadow-of-the-beast-intro.957ac6e3.mp3",
+    "static/media/index.css": "/triple-t/static/media/wopr_super.294b4888.jpg"
+  }
+}
