@@ -79,9 +79,6 @@ class Game extends React.Component {
 
       const numSquares = characteristicLength * characteristicLength;
 
-      // Synchronous state outside of components, that's got to be an antipattern.
-      this.gameLock=false;
-
       this.state = {
         history: [{
           squares: Array(numSquares).fill(null),
@@ -98,7 +95,8 @@ class Game extends React.Component {
         currentMusicIndex: currentMusicIndex,
         currentMusic: currentMusic,
         difficulty: initialDifficulty,
-        difficultyOptions: difficultyOptions
+        difficultyOptions: difficultyOptions,
+        gameLock: false,
       }
   }
 
@@ -155,15 +153,15 @@ class Game extends React.Component {
 
     // The game board UI needs to be disabled until human and computer goes
     // are finished otherwise a fast clicker can have the computer's go.
-    if (this.gameLock) return;
-    this.gameLock = true;
+    if (this.state.gameLock) return;
+    this.setState({gameLock: true});
 
     // Have the human go. This updates game state.
     this.haveAGo(i);
 
     // If the second player is human don't invoke AI.
     if(this.state.difficulty === 'human') {
-        this.gameLock=false;
+        this.setState({gameLock: false});
         return;
     }
 
@@ -192,7 +190,7 @@ class Game extends React.Component {
         this.haveAGo(computerSquareChoice);
 
         // Re-enable the board UI.
-        this.gameLock=false;
+        this.setState({gameLock: false});
       }, delay);
     });
   }
@@ -206,6 +204,7 @@ class Game extends React.Component {
       winner: null,
       isDraw: false,
       winningLine: null,
+      gameLock: false,
     });
   }
 
