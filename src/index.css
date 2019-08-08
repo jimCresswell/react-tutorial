@@ -190,6 +190,7 @@ a {
   max-width: 100%;
   /* Lighter than other elements to compensate for default shadow dom styling in FF */
   background: rgba(0, 0, 0, 0.3);
+  border: 5px solid black;
 }
 
 .difficulty {
