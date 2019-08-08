@@ -87,8 +87,12 @@ a {
 .background {
   background: center / 100% 100% no-repeat url('./images/wopr_super.jpg');
   min-height: 80vh;
-  padding: 1em;
   margin: auto;
+}
+@media all and (min-width: 740px) {
+  .background {
+    padding: 1em;
+  }
 }
 
 .game {
@@ -180,6 +184,12 @@ a {
   padding: 0.4em;
   margin-bottom: 0.2em;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.options audio {
+  max-width: 100%;
+  /* Lighter than other elements to compensate for default shadow dom styling in FF */
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .difficulty {
