@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "39901701568b513c929036d98ecaca05",
+    "revision": "89e54661a01bbdcc341a1d1a766a5d8e",
     "url": "/triple-t/index.html"
   },
   {
-    "revision": "57bcb0aa5e7632613a84",
-    "url": "/triple-t/static/css/main.77964c88.chunk.css"
+    "revision": "68bbea4d1c81127e5647",
+    "url": "/triple-t/static/css/main.fcd17f19.chunk.css"
   },
   {
     "revision": "b6a704ca644c1df5127f",
     "url": "/triple-t/static/js/2.77bfa541.chunk.js"
   },
   {
-    "revision": "57bcb0aa5e7632613a84",
-    "url": "/triple-t/static/js/main.bac0e181.chunk.js"
+    "revision": "68bbea4d1c81127e5647",
+    "url": "/triple-t/static/js/main.49b1ce16.chunk.js"
   },
   {
     "revision": "9efb508c8f7f620aa78c",
