@@ -277,6 +277,7 @@ class Game extends React.Component {
     // Creates typing effect.
     if (this.state.stepNumber===0) {
       // Set message with blinking cursor every other iteration.
+      // On occasion race conditions make this hilariously buggy.
       status = startMessage.concat(initialStartMessage.length%2===1 ? '_' : '');
       if(initialStartMessage.length) {
         let letter = initialStartMessage.shift();
