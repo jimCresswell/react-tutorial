@@ -248,7 +248,8 @@ class Game extends React.Component {
     const difficultyOptions = this.state.difficultyOptions.slice();
 
     const moveListItems = history.map((step, moveNumber) => {
-      const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : 'Go to game start';
+      const gameStart = <><span role="img" aria-label="restart game">🔃</span><span> Go to game start</span></>
+      const desc = moveNumber > 0 ? 'Go to move #' + moveNumber + '. ' + step.move : gameStart;
       const isCurrent = moveNumber===stepNumber;
       const shouldHighlight = highlight!==null && highlight===step.indexPlayed;
       const currentClass = `${isCurrent ? 'current' : ''}`;
@@ -313,7 +314,7 @@ class Game extends React.Component {
           <section className="controls">
             <div className="game-info">
               <div className={`status ${winner?'winner':''}`}>{status}</div>
-              <button className="reverse-history" onClick={() => this.reverseHistory()}><span role="img" aria-label="reverse list order">🔃</span></button>
+              <button className="reverse-history" onClick={() => this.reverseHistory()}>Reverse order</button>
               <ol className="history">{reverseHistory ? moveListItems.reverse() : moveListItems}</ol>
             </div>
             <figure className="options">

@@ -145,13 +145,12 @@ a {
 }
 
 .game-info .reverse-history {
-  font-size: 1.4em;
-  width:1.6em;
-  height:1.6em;
-  padding: 0;
-  margin-left: 1.7em;
+  font-size: 0.8em;
+  height: 2em;
+  margin-left: 3em;
+  border: 3px solid darkgrey;
   background-color: white;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 .game-info .history {
