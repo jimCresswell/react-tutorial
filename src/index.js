@@ -12,6 +12,8 @@ import {wopr} from './ai.js';
 
 import './index.css';
 
+import packageJson from '../package.json';
+
 import anworldAudio from './audio/another-world-intro.mp3';
 import rtypeAudio from './audio/r-type-title.mp3';
 import shadowAudio from './audio/shadow-of-the-beast-intro.mp3';
@@ -329,6 +331,7 @@ class Game extends React.Component {
             </figure>
           </section>
         </div>
+        <div className="version">v{packageJson.version}</div>
       </div>
     );
   }
